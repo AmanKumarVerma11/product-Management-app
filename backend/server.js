@@ -9,7 +9,8 @@ const app = express();
 
 // CORS Configuration
 app.use(cors({
-  origin: 'http://localhost:5173', // React's default Vite port
+  origin: 'https://product-management-app-dun.vercel.app', // Frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 
