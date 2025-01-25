@@ -8,11 +8,10 @@ require('dotenv').config();
 const app = express();
 
 // CORS Configuration
-app.use(cors({
-  origin: 'https://product-management-app-dun.vercel.app', // Frontend domain
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}));
+const allowedOrigins = [
+  'https://product-management-app-dun.vercel.app',
+  'http://localhost:5173'
+];
 
 app.use(express.json());
 
@@ -216,13 +215,6 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === 'development' ? err.message : {}
   });
 });
-
-// Recommended .env variables:
-// MONGODB_URI=mongodb+srv://...
-// TOKEN_SECRET=your_long_random_secret
-// FRONTEND_URL=http://localhost:3000
-// NODE_ENV=development
-// PORT=5000
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
