@@ -30,7 +30,7 @@ function App() {
     const password = e.target.password.value;
     
     try {
-      const response = await axios.post(`${backendUrl}/api/login`, { email, password });
+      const response = await axios.post(`${backendUrl}/login`, { email, password });
       setToken(response.data.accessToken);
       setIsLoggedIn(true);
       fetchProducts(response.data.accessToken);
@@ -45,7 +45,7 @@ function App() {
     const password = e.target.password.value;
     
     try {
-      await axios.post(`${backendUrl}/api/signup`, { email, password });
+      await axios.post(`${backendUrl}/signup`, { email, password });
       alert('Signup successful');
     } catch (error) {
       alert('Signup failed: ' + error.message);
@@ -69,7 +69,7 @@ function App() {
 
   const fetchProducts = async (authToken) => {
     try {
-      const response = await axios.get(`${backendUrl}/api/products`, {
+      const response = await axios.get(`${backendUrl}/products`, {
         headers: { Authorization: `Bearer ${authToken || token}` }
       });
       setProducts(response.data);
@@ -89,7 +89,7 @@ function App() {
         rating: Number(productForm.rating)
       };
 
-      await axios.post(`${backendUrl}/api/products`, productData, {
+      await axios.post(`${backendUrl}/products`, productData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -103,7 +103,7 @@ function App() {
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${backendUrl}/api/products/${editingProduct._id}`, {
+      await axios.put(`${backendUrl}/products/${editingProduct._id}`, {
         ...productForm,
         price: Number(productForm.price),
         rating: Number(productForm.rating)
@@ -120,7 +120,7 @@ function App() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      await axios.delete(`${backendUrl}/api/products/${productId}`, {
+      await axios.delete(`${backendUrl}/products/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchProducts();
@@ -131,7 +131,7 @@ function App() {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/api/products/featured`, {
+      const response = await axios.get(`${backendUrl}/products/featured`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProducts(response.data);
@@ -142,7 +142,7 @@ function App() {
 
   // const fetchProductsByPrice = async (maxPrice) => {
   //   try {
-  //     const response = await axios.get(`${backendUrl}/api/products/price/${maxPrice}`, {
+  //     const response = await axios.get(`${backendUrl}/products/price/${maxPrice}`, {
   //       headers: { Authorization: `Bearer ${token}` }
   //     });
   //     setProducts(response.data);
@@ -153,7 +153,7 @@ function App() {
 
   // const fetchProductsByRating = async (minRating) => {
   //   try {
-  //     const response = await axios.get(`${backendUrl}/api/products/rating/${minRating}`, {
+  //     const response = await axios.get(`${backendUrl}/products/rating/${minRating}`, {
   //       headers: { Authorization: `Bearer ${token}` }
   //     });
   //     setProducts(response.data);
@@ -195,7 +195,7 @@ function App() {
     // Fetch all products on initial load to calculate max price
     const fetchMaxPrice = async () => {
       try {
-        const response = await axios.get(`${backendUrl}/api/products`, {
+        const response = await axios.get(`${backendUrl}/products`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const allProducts = response.data;
@@ -216,13 +216,13 @@ function App() {
     try {
       // Fetch products filtered by price
       const priceResponse = await axios.get(
-        `${backendUrl}/api/products/price/${priceFilter}`,
+        `${backendUrl}/products/price/${priceFilter}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       // Fetch products filtered by rating
       const ratingResponse = await axios.get(
-        `${backendUrl}/api/products/rating/${ratingFilter}`,
+        `${backendUrl}/products/rating/${ratingFilter}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
