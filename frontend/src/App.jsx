@@ -465,6 +465,7 @@ function App() {
                 <p>Price: ${product.price}</p>
                 <p>Company: {product.company}</p>
                 <p>Rating: {product.rating}</p>
+                <p>Added on: {new Date(product.createdAt).toLocaleString()}</p>
                 {product.featured && (
                   <span className="text-green-500">Featured</span>
                 )}
